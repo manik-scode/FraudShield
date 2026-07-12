@@ -2,9 +2,6 @@ import joblib
 import pandas as pd
 from pathlib import Path
 
-# ===========================
-# Load Artifacts
-# ===========================
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 ARTIFACT_DIR = BASE_DIR / "artifacts"
@@ -22,15 +19,10 @@ class PredictPipeline:
 
     def predict(self, input_data):
 
-        # -----------------------------
-        # Dictionary -> DataFrame
-        # -----------------------------
 
         df = pd.DataFrame([input_data])
 
-        # -----------------------------
-        # Merchant Encoding
-        # -----------------------------
+
 
         df["merchant"] = (
             df["merchant"]
@@ -39,9 +31,7 @@ class PredictPipeline:
             .astype(int)
         )
 
-        # -----------------------------
-        # Weekday Encoding
-        # -----------------------------
+
 
         weekday_map = {
             "Monday": 0,
@@ -55,18 +45,14 @@ class PredictPipeline:
 
         df["transaction_weekday"] = df["transaction_weekday"].map(weekday_map)
 
-        # -----------------------------
-        # Boolean Encoding
-        # -----------------------------
+
 
         df["is_night_transaction"] = (
             df["is_night_transaction"]
             .astype(int)
         )
 
-        # -----------------------------
-        # Category Encoding
-        # -----------------------------
+
 
         encoded = encoder.transform(df[["category"]])
 
@@ -84,9 +70,7 @@ class PredictPipeline:
             axis=1
         )
 
-        # -----------------------------
-        # Missing Columns
-        # -----------------------------
+
 
         for col in feature_columns:
 
@@ -94,21 +78,9 @@ class PredictPipeline:
 
                 df[col] = 0
 
-        # -----------------------------
-        # Correct Order
-        # -----------------------------
 
         df = df[feature_columns]
 
-        # -----------------------------
-        # Prediction
-        # -----------------------------
-
-        # prediction = model.predict(df)[0]
-
-        # # probability = model.predict_proba(df)[0][1]
-        # probabilities = model.predict_proba(df)[0]
-        # fraud_probability = float(probabilities[1])
         fraud_probability = float(model.predict_proba(df)[0][1])
         THRESHOLD = 0.25 
         
@@ -126,11 +98,3 @@ class PredictPipeline:
         "prediction": prediction,
         "fraud_probability": fraud_probability
     }
-        # -----------------------------
-        # Return
-        # -----------------------------
-
-        # return {
-        #     "prediction": "Fraud" if prediction == 1 else "Not Fraud",
-        #     "fraud_probability": fraud_probability
-        # }

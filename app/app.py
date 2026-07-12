@@ -11,8 +11,7 @@ st.set_page_config(
     page_icon="🛡️",
     layout="wide"
 )
-# ================= Sidebar =================
-#
+
 with st.sidebar:
 
     st.image(
@@ -51,13 +50,11 @@ st.markdown("### AI-Powered Credit Card Fraud Detection System")
 
 st.divider()
 
-# ================= MAIN LAYOUT ================= #
+
 
 left_col, right_col = st.columns([2, 1])
 
-# ==========================================================
-# LEFT SIDE
-# ==========================================================
+
 
 with left_col:
 
@@ -164,9 +161,7 @@ with left_col:
             list(range(1, 13))
         )
 
-# ==========================================================
-# RIGHT SIDE
-# ==========================================================
+
 with right_col:
 
     st.info("""
