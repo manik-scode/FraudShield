@@ -14,9 +14,6 @@ app = FastAPI(
 )
 
 
-# ==============================
-# Request Schema
-# ==============================
 
 class TransactionData(BaseModel):
 
@@ -39,10 +36,6 @@ class TransactionData(BaseModel):
     merchant_visit_frequency: int
 
 
-# ==============================
-# Home Route
-# ==============================
-
 @app.get("/")
 def home():
 
@@ -51,9 +44,7 @@ def home():
     }
 
 
-# ==============================
-# Prediction Route
-# ==============================
+
 
 @app.post("/predict")
 def predict(data: TransactionData):
