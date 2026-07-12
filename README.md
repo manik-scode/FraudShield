@@ -128,7 +128,7 @@ streamlit run app/app.py
 
 ---
 
-## 👨‍💻 Developer
+##  Developer
 
 **Manish Saini**
 
